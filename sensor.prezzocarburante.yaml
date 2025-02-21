@@ -1,0 +1,12 @@
+sensor:
+  - platform: rest
+    name: "Benzina Servito"
+    resource: "https://carburanti.mise.gov.it/ospzApi/registry/servicearea/12345"
+    method: GET
+    value_template: >
+      {% for fuel in value_json.fuels %}
+        {% if fuel.fuelId == 1 and fuel.isSelf == False %}
+          {{ fuel.price }}
+        {% endif %}
+      {% endfor %}
+    unit_of_measurement: "€/L"
